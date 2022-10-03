@@ -6,11 +6,11 @@ const router = new Router()
 //Create user
 router.post('/', controllUser.createUser)
 //Search user by uid
-router.get('/:uuid', controllUser.getUserByUuid)
+router.get('/login', controllUser.getUserByUuid)
 //Update user by uid
-router.put('/:uuid', controllUser.updateUser)
+router.put('/', controllUser.updateUser)
 //Delete user by uid
-router.delete('/:uuid', controllUser.deleteUserByUuid)
+router.delete('/', controllUser.deleteUserByUuid)
 //Get all users
 router.get('/', controllUser.getAllUsers)
 

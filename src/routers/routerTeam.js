@@ -4,12 +4,10 @@ const router = new Router()
 
 //Create team
 router.post('/',controllTeam.createTeam)
-//Search team by uid
-router.get('/:uuid',controllTeam.getTeamByUuid)
-//Update team by uid
-router.put('/:uuid',controllTeam.updateTeam)
-//Delete team by uid
-router.delete('/:uuid', controllTeam.deleteTeamByUuid)
+//Update team by id
+router.put('/',controllTeam.updateTeam)
+//Delete team by id
+router.delete('/', controllTeam.deleteTeamByUuid)
 //Get all teams
 router.get('/',controllTeam.getAllTeams)
 

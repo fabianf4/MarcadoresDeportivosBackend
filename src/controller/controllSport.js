@@ -1,14 +1,14 @@
-const modelTeam = require("../models/modelTeam")
+const modellSport = require("../models/modelSport")
 
 module.exports = {
-  createTeam: async (req, res) => {
+  createSport: async (req, res) => {
     try {
-      const team = new modelTeam(req.body)
-      await team.save()
+      const sport = new modellSport(req.body)
+      await sport.save()
 
       res.status(200).json({
         result: true,
-        team
+        sport
       })
     } catch (error) {
       res.status(500).json({
@@ -17,12 +17,12 @@ module.exports = {
       })
     }
   },
-  getAllTeams: async (req, res) => {
+  getAllSport: async (req, res) => {
     try {
-      const team = await modelTeam.find()
+      const sport = await modellSport.find()
       res.status(200).json({
         result: true,
-        team
+        sport
       })
     } catch (error) {
       res.status(500).json({
@@ -31,13 +31,13 @@ module.exports = {
       })
     }
   },
-  updateTeam: async (req, res) => {
+  updateSport: async (req, res) => {
     const id = req.body.id
     try {
-      const team = await modelTeam.findByIdAndUpdate(id, req.body)
+      const sport = await modellSport.findByIdAndUpdate(id, req.body)
       res.status(200).json({
         result: true,
-        team
+        sport
       })
     } catch (error) {
       res.status(500).json({
@@ -46,13 +46,13 @@ module.exports = {
       })
     }
   },
-  deleteTeamByUuid: async (req, res) => {
+  deleteSportById: async (req, res) => {
     const id = req.body.id
     try {
-      const team = await modelTeam.findByIdAndDelete({ _id: id })
+      const sport = await modellSport.findByIdAndDelete({ _id: id })
       res.status(200).json({
         result: true,
-        team
+        sport
       })
     } catch (error) {
       res.status(500).json({
