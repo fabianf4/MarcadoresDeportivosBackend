@@ -1,15 +1,15 @@
-const {Router} = require ('express');
-const controllEvent = require ('../controller/controllEvent')
-
+const { Router } = require("express")
+const controllEvent = require("../controller/controllEvent")
+const validateToken = require("../validator/validatorToken")
 const router = new Router()
 
 //Create event
-router.post('/',controllEvent.createEvent)
+router.post("/", validateToken, controllEvent.createEvent)
 //Update event by uuid
-router.put('/', controllEvent.updateEvent)
+router.put("/", validateToken, controllEvent.updateEvent)
 //Delete event by uuid
-router.delete('/', controllEvent.deleteEventById)
+router.delete("/", validateToken, controllEvent.deleteEventById)
 //Get all events
-router.get('/', controllEvent.getAllEvent)
+router.get("/", validateToken, controllEvent.getAllEvent)
 
 module.exports = router

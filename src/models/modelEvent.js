@@ -5,6 +5,10 @@ const modelEvent = new mongoose.Schema({
     type: Date,
     required: true
   },
+  sport: {
+    type: mongoose.ObjectId,
+    required: true
+  },
   team1: {
     type: mongoose.ObjectId,
     required: true

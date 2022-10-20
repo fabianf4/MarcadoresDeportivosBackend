@@ -1,17 +1,18 @@
-const {Router} = require ('express');
-const controllUser = require ('../controller/controllUser')
+const { Router } = require("express")
+const controllUser = require("../controller/controllUser")
+const validateToken = require("../validator/validatorToken")
 
 const router = new Router()
 
 //Create user
-router.post('/', controllUser.createUser)
-//Search user by uid
-router.get('/login', controllUser.getUserByUuid)
+router.post("/", controllUser.createUser)
+//Login with email and password
+router.post("/login", controllUser.login)
 //Update user by uid
-router.put('/', controllUser.updateUser)
+router.put("/", validateToken, controllUser.updateUser)
 //Delete user by uid
-router.delete('/', controllUser.deleteUserByUuid)
+router.delete("/", validateToken, controllUser.deleteUserByUuid)
 //Get all users
-router.get('/', controllUser.getAllUsers)
+router.get("/", validateToken, controllUser.getAllUsers)
 
 module.exports = router
