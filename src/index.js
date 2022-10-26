@@ -16,6 +16,9 @@ app.use(express.json())
 //mongoose
 require("./drivers/driverMongoose")
 
+//estatico
+app.use("/public", express.static("./src/public"))
+
 //routers
 const routerUser = require("./routers/routerUser")
 const routerTeam = require("./routers/routerTeam")
@@ -26,6 +29,10 @@ app.use("/user", routerUser)
 app.use("/team", routerTeam)
 app.use("/event", routerEvent)
 app.use("/sport", routerSport)
+
+app.get("/", (req, res) => {
+  res.send("hola mundo")
+})
 
 app.listen(port, () => {
   console.log(`Api initialized on port ${port}`)

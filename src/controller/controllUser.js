@@ -2,18 +2,19 @@ const modelUser = require("../models/modelUser")
 const bcryptjs = require("bcryptjs")
 const { v4: uuidv4 } = require("uuid")
 const jwt = require("jsonwebtoken")
+const fs = require("fs")
 
 const SALT = parseInt(process.env.SALT)
 const SECRET = process.env.SECRET
 
 const errors = {
-  defaultError:(res,msg)=>{
+  defaultError: (res, msg) => {
     return res.status(200).json({
       result: false,
       msg
     })
   },
-  loginError: (res)=>{
+  loginError: (res) => {
     return res.status(200).json({
       result: true,
       login: false
@@ -27,9 +28,14 @@ module.exports = {
 
     try {
       req.body.password = await bcryptjs.hash(req.body.password, SALT)
+      req.body.image = `${req.body.uuid}.${req.file.originalname}`
 
       const user = new modelUser(req.body)
       await user.save()
+
+      fs.rename(`./src/public/${req.file.filename}`,`./src/public/${req.body.image}`, () => {
+        console.log("rename")
+      })
 
       res.status(200).json({
         result: true,
@@ -53,6 +59,7 @@ module.exports = {
 
       bcryptjs.compare(password, user.password, (err, result) => {
         if (err) console.log(err)
+
         if (!result) return errors.loginError(res)
 
         jwt.sign(
@@ -72,13 +79,13 @@ module.exports = {
         )
       })
     } catch (error) {
-      return errors.defaultError(res,error)
+      return errors.defaultError(res, error)
     }
   },
   updateUser: async (req, res) => {
     const uuid = req.body.uuid
 
-    if(req.body.password){
+    if (req.body.password) {
       req.body.password = await bcryptjs.hash(req.body.password, SALT)
     }
 
@@ -97,8 +104,13 @@ module.exports = {
   },
   deleteUserByUuid: async (req, res) => {
     try {
+
       const uuid = req.body.uuid
       const user = await modelUser.findOneAndDelete({ uuid })
+
+      fs.unlink(`./src/public/${user.image}`, () => {
+        console.log("delete")
+      })
 
       res.status(200).json({
         result: true,
